@@ -10,6 +10,13 @@
 
 {% block content %}
     <div class="col-md-4">
-        <p>目前还没有内容</p>
+    {% verbatim %}
+    <div ng-app="" ng-init="firstName='John'">
+
+    <p>Name: <input type="text" ng-model="firstName"></p>
+    <p>You wrote: {{ firstName }}</p>
+
+    </div>
+    {% endverbatim %}
     </div>
 {% endblock %}
