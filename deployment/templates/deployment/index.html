@@ -1,22 +1,95 @@
 {% extends 'base.html' %}
+{% load static from staticfiles %}
 
-{% block jumbotron %}
-    <div class="jumbotron">
-      <div class="container">
-        <h1>{{ text }}</h1>
-      </div>
-    </div>
-{% endblock %}
+{#{% block jumbotron %}#}
+{#    <div class="jumbotron">#}
+{#      <div class="container">#}
+{#        <h1>{{ text }}</h1>#}
+{#      </div>#}
+{#    </div>#}
+{#{% endblock %}#}
 
 {% block content %}
-    <div class="col-md-4">
-    {% verbatim %}
-    <div ng-app="" ng-init="firstName='John'">
+{#    <div class="row">#}
+{#        <div class="col-md-4">#}
+{#        {% verbatim %}#}
+{#        <div ng-app="" ng-init="firstName='John'">#}
+{##}
+{#        <p>Name: <input type="text" ng-model="firstName"></p>#}
+{#        <p>You wrote: {{ firstName }}</p>#}
+{##}
+{#        </div>#}
+{#        {% endverbatim %}#}
+{#        </div>#}
+{#    </div>#}
+<div class="row">
+  <h2 class="sub-header">信息面板</h2>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>实例 ID</th>
+          <th>内网 IP</th>
+          <th>公网 IP</th>
+          <th>同步状态</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1,002</td>
+          <td>amet</td>
+          <td>consectetur</td>
+          <td>adipiscing</td>
+          <td><i class="icon-spinner icon-spin"></i></td>
+        </tr>
+        <tr>
+          <td>1,002</td>
+          <td>amet</td>
+          <td>consectetur</td>
+          <td>adipiscing</td>
+          <td><i class="icon-ok"></i></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <h3 class="sub-header">Total</h3>
+</div>
 
-    <p>Name: <input type="text" ng-model="firstName"></p>
-    <p>You wrote: {{ firstName }}</p>
 
+<div class="row" >
+    <form onsubmit="return false;">
+        {% csrf_token %}
+        Blog Title:<br />
+        <input type="text" id="blogtitle" /><br />
+        <button onclick="CreateBlog()">Submit</button>
+    </form>
+</div>
+<div class="row">
+    <div id="LoadingImage" style="display: none">
+        <img src={% static 'face.jpg' %} />
     </div>
-    {% endverbatim %}
-    </div>
+    <div id="output">TEST</div>
+</div>
+
+<script type="text/javascript">
+    function CreateBlog() {
+        $("#LoadingImage").show();
+        $.ajax({
+            type: "POST",
+            url: "/",
+            dataType: "json",
+            async: true,
+            data: {
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                blogtitle: $('#blogtitle').val()
+            },
+            success: function (json) {
+                $("#LoadingImage").hide();
+                $('#output').html(json.message);
+            }
+        });
+    }
+</script>
+    
 {% endblock %}
