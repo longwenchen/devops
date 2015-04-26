@@ -23,7 +23,6 @@ def index(request):
 
 def push(request):
     # if request.POST:
-    proc = subprocess.Popen("ipconfig", stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    info = proc.communicate()
-    return HttpResponse(info)
-
+    import tasks
+    result = tasks.add.delay(3,4)
+    return HttpResponse(result.get())

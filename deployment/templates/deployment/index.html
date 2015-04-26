@@ -43,13 +43,6 @@
           <td>adipiscing</td>
           <td><i class="icon-spinner icon-spin"></i></td>
         </tr>
-        <tr>
-          <td>1,002</td>
-          <td>amet</td>
-          <td>consectetur</td>
-          <td>adipiscing</td>
-          <td><i class="icon-ok"></i></td>
-        </tr>
       </tbody>
     </table>
   </div>
@@ -62,7 +55,7 @@
         {% csrf_token %}
         Blog Title:<br />
         <input type="text" id="blogtitle" /><br />
-        <button onclick="CreateBlog()">Submit</button>
+        <button onclick="getResult()">Submit</button>
     </form>
 </div>
 <div class="row">
@@ -73,11 +66,11 @@
 </div>
 
 <script type="text/javascript">
-    function CreateBlog() {
+    function getResult() {
         $("#LoadingImage").show();
         $.ajax({
             type: "POST",
-            url: "/",
+            url: "/push",
             dataType: "json",
             async: true,
             data: {
@@ -90,6 +83,7 @@
             }
         });
     }
+setInterval("getResult()",1000);
 </script>
     
 {% endblock %}
