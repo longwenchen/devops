@@ -27,6 +27,6 @@ def push(request):
     response_data = dict()
 
     response_data['message'] = text
-    
+
     if request.is_ajax():
         return HttpResponse(json.dumps(response_data), content_type="application/json")
