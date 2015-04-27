@@ -23,6 +23,10 @@ def index(request):
 
 def push(request):
     # if request.POST:
-    import tasks
-    result = tasks.add.delay(3,4)
-    return HttpResponse(result.get())
+    text = request.POST.get("blogtitle", "")
+    response_data = dict()
+
+    response_data['message'] = text
+    
+    if request.is_ajax():
+        return HttpResponse(json.dumps(response_data), content_type="application/json")
