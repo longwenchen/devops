@@ -22,4 +22,6 @@ def index(request):
 
 def push(request):
     # if request.POST:
-    pass
+    from tasks import add
+    result = add.delay(1, 2)
+    return HttpResponse(result.get())
